@@ -1,0 +1,284 @@
+<style>
+  .whatsapp{
+      background-color: limegreen;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+  }
+
+  .banner-container{
+    height: 170px;
+    position: relative;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+  }
+
+  .pegajoso{
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding-top: 5px;
+    text-align: center;
+    z-index: 9999;
+    border-bottom: 2px solid chocolate;
+  }
+
+  .logo{
+    width: 150px;
+  }
+
+  *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  :root{
+    --height-menu: 70px;
+  }
+  #nav{
+      background: white;
+      height: var(--height-menu);
+      width: 100%;
+      padding: 0 20px;
+  }
+  #nav #ul{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: calc(var(--height-menu) - 15px);
+  }
+  #nav #ul li{
+      display: inline-block;
+      margin: 0 5px;
+  }
+  .checkbtn{
+      font-size: 30px;
+      float: right;
+      cursor: pointer;
+      display: none;
+  }
+  #check{
+      display: none;
+  }
+
+  #nav label img{
+    transition: all 0.25s;
+  }
+
+  #nav label{
+    color: deeppink;
+    transition: all 0.25s;
+  }
+
+  #txt2{
+    display: none;
+  }
+
+  .boton-menu {
+    color: deeppink;
+    background: rgb(252, 244, 229);
+    padding: 5px;
+    margin: 3px;
+    border: 2px solid chocolate;
+    font-size: 90%;
+    width: 120px;
+  }
+
+  @media (max-width: 850px){
+      .checkbtn{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #nav{
+        position: sticky;
+        top:0
+      }
+
+      #ul{
+        position: absolute;
+        top: var(--height-menu);
+        flex-direction: column;
+        justify-content: space-evenly !important;
+        transform: translate(-100vw,0);
+        width: 100vw;
+        height: calc(100vh - var(--height-menu) + 15px) !important;
+        background: white;
+        text-align: center;
+        transition: all .5s;
+      }
+      #check:checked ~ #ul{
+        transform: translate(0,0);
+      }
+
+      #nav #check:checked ~ label img{
+        transform: rotate(450deg);
+        filter: brightness(300%);
+      }
+
+      #nav #check:checked ~ #ul #secciones-relevantes{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      #nav #check:checked ~ label{
+        color: white;
+      }
+      #nav #check:checked ~ label #txt1{
+        display: none;
+      }
+      #nav #check:checked ~ label #txt2{
+        display: block;
+      }
+      
+      .pegajoso:has(#check:checked){
+        position: fixed;
+        background: deeppink;
+        transition: all 1s;
+      }
+  }
+</style>
+<% if(folder=="root"){ %> 
+  <div 
+    class="
+      flex-direction_column-less-900px
+      seccion 
+      whatsapp
+    " 
+    style="padding: 5px; color: white;text-align: center;font-size: 80%;"
+  >
+    <div style="font-family: calibri;font-size: 20px;">
+      Todos los pedidos se hacen directamente en Whatsapp
+    </div>
+    <div>
+      <a href="https://wa.me/+573016105515" target="_blank">
+        <div class="boton dunkin" style="background-color: green;min-width: 150px;">
+          3016105515 <big><big><i class="fa-brands fa-whatsapp"></i></big></big> 
+        </div>
+      </a>
+      <a href="https://wa.me/+573160461638" target="_blank">
+        <div class="boton dunkin" style="background-color: green;min-width: 150px;">
+          3160461638 <big><big><i class="fa-brands fa-whatsapp"></i></big></big> 
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="banner-container dunkin">
+    <div 
+      style="
+        position: absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background: rgba(255, 255, 255, 0.8);
+        z-index: -1;
+        background-size: cover;
+        opacity: 0.3;
+        background-repeat: no-repeat;
+        background-image: url(<%= sheet.imgs.find("alias","bannerSuperior1024px").URL %>);
+      "
+    ></div>
+    <a href="/home">
+      <center>
+        <img src="<%- sheet.imgs.find("alias","logo600px").URL %>" class="logo">
+      </center>
+    </a>
+  </div>
+<% } %> 
+
+<div class="pegajoso dunkin" id="nav">
+  <input type="checkbox" id="check">
+  <label for="check" class="checkbtn" style="font-size: 100%;">
+      Ver&nbsp;<span id="txt1">más</span><span id="txt2">menos</span>&nbsp;
+      <img src="<%-sheet.imgs.find("alias","donutSVG").URL%>" style="height:calc(var(--height-menu) - 20px);">
+  </label>
+  <div id="ul">
+    <div>
+      <div class="boton" style="margin: 5px;font-size: 90%;text-align: left;">
+        <% if(user){ %>
+          <table >
+            <tbody>
+              <tr>
+                <td>
+                  <big><big><i class="fa-solid fa-user"></i></big></big> &nbsp;
+                </td>
+                <td>
+                  <div>
+                    <a href="/auth/perfil">
+                      <% 
+                        let limit = 20
+                        if (user.nombre.length>limit) {
+                          let partname = user.nombre.split(" ")
+                          let test = partname[0]
+                          if (partname.length>=2) {
+                            test = partname[0]+" "+partname[1]
+                          }
+                      %>
+                        <%- test.length>limit?test.substr(0,limit) + "...":test %>
+                      <%
+                        }else{
+                      %> 
+                        <%- user.nombre %> 
+                      <% } %> 
+                      <br>
+                      <span>
+                        (<%- user.celular %>)
+                      </span>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+        <% }else{ %>
+          <a href="/auth/login">
+            <i class="fa-solid fa-user"></i> Iniciar Sesión
+          </a>
+        <% } %>
+      </div>
+    </div>
+
+    <div id="secciones-relevantes">
+      <% if(folder!="root"){ %> 
+        <div class="boton" style="margin: 5px;font-size: 160%;color:deeppink;">
+          <a href="/home">
+            <i class="fa-solid fa-house-chimney"></i>
+          </a>
+        </div>
+      <% } %>
+      <a href="/comprar/catalogo">
+        <div class="boton boton-menu">
+          <i class="fa-solid fa-utensils"></i> Catálogo
+        </div>
+      </a>
+      <a href="/juegos/main">
+        <div class="boton boton-menu">
+          <i class="fa-solid fa-puzzle-piece"></i> Juegos
+        </div>
+      </a>
+    </div>
+  
+    <div style="color: white;display: flex;justify-content: center;align-items: center;">
+      <% if(user){ %>
+        <a href="https://wa.me/+573016105515" target="_blank">
+          <div class="boton btn-icon-round dunkin" style="background-color: rgb(116, 9, 9);border-radius: 50%;">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </div>
+        </a>
+      <% } %>
+      <a href="https://wa.me/+573016105515" target="_blank">
+        <div class="boton btn-icon-round dunkin" style="background-color: limegreen;border-radius: 50%;">
+          <big><big><i class="fa-brands fa-whatsapp"></i></big></big>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

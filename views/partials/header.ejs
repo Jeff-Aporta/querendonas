@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <% if(folder=="root"){ %> 
+        <script src="https://cdn.jsdelivr.net/npm/glider-js@1.7.8/glider.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glider-js@1.7.8/glider.min.css">
+    <% } %> 
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.2/dist/sweetalert2.all.min.js"></script>
+    
+    <script defer src="/js/responsive-lerpw.js"></script>
+    <script defer src="/js/responsive-switchw.js"></script>
+    <script defer src="/js/responsive-ifw.js"></script>
+    <script defer src="/js/carrito.js"></script>
+    <script src="/js/main-tools.js"></script>
+    
+    <script>
+        var socket = io();
+    </script>
+
+    <link rel="stylesheet" href="/css/main.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <meta property="og:site_name" content="Querendonas">
+    <meta property="og:title" content="Querendonas">
+    <meta property="og:description" content="Querendonas">
+    <title>Querendonas</title>
+    <meta property="og:image" content="<%- sheet.imgs.find("alias","logo600px").URL %>">
+    <link rel="icon" type="image/png" href="<%- sheet.imgs.find("alias","logo600px").URL %>">
+</head>
+<%- include('navigation') %>
+<%- include('cortina-de-espera') %>
+

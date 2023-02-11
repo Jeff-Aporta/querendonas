@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+
+<%- include('partials/auth-user',{login:true}) %>
+
+<br>
+<center>
+    <h1>
+        Información de perfil
+    </h1>
+    <h4>
+        <%- user.celular %>
+    </h4>
+
+    <a href="/logout">
+        <div class="boton dunkin" style="background: seashell;color: deeppink;padding: 10px;border: 2px solid chocolate;">
+            Cerrar Sesión <i class="fa-solid fa-power-off"></i>
+        </div>
+    </a>
+
+    <br>
+    <br>
+
+    <div style="display: inline-block;text-align: left;border: 1px solid lightgray;padding: 15px;">
+        <label>
+            Nombre
+            <br>
+            <input class="swal2-input" type="text">
+        </label>
+        <label>
+            Contraseña
+            <br>
+            <input class="swal2-input" type="password">
+        </label>
+    </div>
+</center>
+<br>
+<%- include('../partials/footer') %>

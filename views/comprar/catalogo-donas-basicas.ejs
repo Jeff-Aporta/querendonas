@@ -1,0 +1,118 @@
+<div style="padding: 30px 0;">
+    <h1 class="sevillana" id="donas-basicas">
+        <big>
+            <big>
+                Donas Básicas
+            </big>
+        </big>
+    </h1>
+    <div>
+        <% 
+            let grupos = {}
+            for(let producto of sheet.productos.filter(e=>e.tipo=="Dona").filter(e=>e.grupo=="Básica")){ 
+                if (!grupos[producto.variable]) {
+                    grupos[producto.variable] = [producto]
+                }else{
+                    grupos[producto.variable].push(producto)
+                }
+            } 
+        %> 
+        <% 
+            for(let kproducto in grupos){
+                let productos = grupos[kproducto]
+        %> 
+                <h1 class="sevillana">
+                    <strong>
+                        <%- kproducto %>
+                    </strong>
+                </h1> 
+                <% for(let producto of productos){ %>
+                    <div 
+                        style="border: 1px solid deeppink;display: inline-block;width: 270px;padding: 20px;vertical-align: top;margin: 5px;"
+                        id="<%- producto.valor %>"
+                    >
+                        <div style="text-align: left;">
+
+                            <div style="height: 80px;display: flex;justify-content: center;align-items: center;color: deeppink;text-align: center;">
+                                <strong>
+                                    <big>
+                                        <%- producto.Nombre %>
+                                    </big>
+                                </strong>
+                            </div>
+
+                            <center>
+                                <img src="<%- producto.imagen %>" style="width: 200px;height: 200px;object-fit: cover;">
+                            </center>
+
+                            <br>
+
+                            <table style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td valign="top" style="width: 50%;">
+                                            <div style="display: inline-block;">
+                                                <strong>Unidad:</strong> 
+                                                <br>
+                                                <h5>
+                                                    <%- producto.precio.formatMoney() %>
+                                                </h5>
+                                            </div>
+                                        </td>
+                                        <td valign="top" style="text-align: right;width: 100%;">
+                                            <div style="display: inline-block;">
+                                                <strong>Cantidad</strong>
+                                                <br>
+                                                <input 
+                                                    style="margin: 0;width: 70%;"
+                                                    class="swal2-input"
+                                                    type="number" 
+                                                    id="cantidad-<%- producto.id %>" 
+                                                    min="1" 
+                                                    max="50"
+                                                    step="1" 
+                                                    value="1"
+                                                    data-value='<%= JSON.stringify(producto) %>'
+                                                    onchange="
+                                                        let cantidad = parseFloat(this.value);
+                                                        if (cantidad<=0 || isNaN(cantidad)) {
+                                                            this.value = 1;
+                                                            cantidad = 1;
+                                                        }
+                                                        let techo = Math.ceil(cantidad);
+                                                        if (cantidad != techo) {
+                                                            this.value = techo;
+                                                        }
+                                                        calcularPrecio2('<%- producto.id %>');
+                                                    "
+                                                >
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">
+                                            <strong>
+                                                Total
+                                            </strong>
+                                            <h4 id="total-precio-<%- producto.id %>">
+                                                $0
+                                            </h4>
+                                        </td>
+                                        <td valign="top" style="text-align: right;">
+                                            <div class="boton" style="background-color: deeppink;color: white;padding: 10px;">
+                                                <h5>
+                                                    Agregar
+                                                </h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <% } %>
+                <br>
+                <br>
+         <% } %> 
+    </div>
+</div>

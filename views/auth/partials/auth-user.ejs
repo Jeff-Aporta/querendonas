@@ -1,0 +1,13 @@
+<% if(login){ %> 
+    <% if(!user){ %> 
+        <script>
+            window.location.href = "/"
+        </script>
+    <% } %> 
+<% }else{ %> 
+    <% if(user){ %> 
+        <script>
+            window.location.href = "/"
+        </script>
+    <% } %> 
+<% } %> 

@@ -1,0 +1,102 @@
+<%- include('../partials/header') %>
+
+<style>
+    .juego-container{
+        position: relative;
+        width: 100%;
+        height: 200px;
+        color: white;
+        overflow: hidden;
+    }
+
+    .juego-container .img-fondo{
+        position: absolute;
+        left: -10%;
+        top: -10%;
+        width: 110%;
+        height: 110%;
+        filter: blur(3px);
+        object-fit: cover;
+        z-index: -2;
+    }
+
+    .juego-container .img-cover{
+        width: 170px;
+        height: 170px;
+        object-fit: cover;
+        border-radius: 20px;
+        margin-right: 15px;
+    }
+
+    .juego-container .oscurecer{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: initial;
+        padding: 15px;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .juego-container .text-container{
+        width: 50%;
+    }
+</style>
+
+<center>
+    <br>
+    <div style="width: 90%;text-align: left;">
+        <h1>
+            Juegos
+        </h1>
+        Escoge tu juego favorito para que puedas ganas grandes premios.
+    </div>
+    <br>
+</center>
+
+<div id="contenedor-de-todos-los-juegos">
+    <div class="juego-container">
+        <img class="img-fondo" src="<%=sheet.imgs.find("alias","juego--00--lanza los dados").URL%>">
+        <div class="oscurecer">
+            <img class="img-cover" src="<%=sheet.imgs.find("alias","juego--00--lanza los dados").URL%>">
+            <div class="text-container">
+                <h1>
+                    Tira los dados
+                </h1>
+                Podrás ganas diversos premios al sacar una combinación con los dados.
+                <br>
+                <div style="text-align: right;">
+                    <a href="tira-los-dados">
+                        <div class="boton dunkin" style="min-width: 150px;border: 2px solid white;background: rgba(255, 255, 255, 0.3);">
+                            Jugar
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="juego-container">
+        <img class="img-fondo" src="<%=sheet.imgs.find("alias","juego--01--el come donas").URL%>">
+        <div class="oscurecer">
+            <img class="img-cover" src="<%=sheet.imgs.find("alias","juego--01--el come donas").URL%>">
+            <div class="text-container">
+                <h1>
+                    El come donas
+                </h1>
+                Come donas para ganar donas reales.
+                <br>
+                <div style="text-align: right;">
+                    <div class="boton dunkin" style="min-width: 150px;border: 2px solid white;background: rgba(255, 255, 255, 0.3);">
+                        Jugar
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

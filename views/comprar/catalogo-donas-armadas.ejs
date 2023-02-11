@@ -1,0 +1,141 @@
+<div style="padding: 30px 0;">
+    <h1 class="sevillana" id="donas-armadas">
+        <big>
+            <big>
+                Donas Armadas
+            </big>
+        </big>
+    </h1>
+    <div>
+        <% for(let producto of sheet.productos.filter(e=>e.tipo=="Dona").filter(e=>e.grupo=="Armada").filter(e=>e.variable=="Tipo")){ %> 
+            <div 
+                id="<%- producto.valor %>"
+                style="
+                    text-align: left;
+                    border: 1px solid deeppink;
+                    border-radius: 20px;
+                    display: inline-block;
+                    vertical-align: top;
+                    padding: 10px;
+                    margin: 5px;
+                    width: 300px;
+                "
+            >
+                <h3 class="dunkin" style="color: deeppink;">
+                    <%- producto.valor %>
+                </h3> 
+                <div style="padding-left: 10px;">
+                    <% 
+                    let grupos = {}
+                    for(let caracteristica of sheet.productos.filter(e=>e.tipo=="Dona").filter(e=>e.grupo=="Armada").filter(e=>e[producto.valor]=="X")){
+                        let grupo = grupos[caracteristica.variable]
+                        if (grupo) {
+                            grupo.push(caracteristica)
+                        }else{
+                            grupos[caracteristica.variable] = [caracteristica]
+                        }
+                    }
+                    %>
+                    <% 
+                    for(let kgrupo in grupos) {
+                        let lbl = kgrupo
+                        let grupo = grupos[kgrupo]
+                    %>  
+                        <big>
+                            <strong>
+                                <%- kgrupo %>
+                            </strong>
+                        </big>
+                        <div style="padding-left: 30px;">
+                            <% 
+                                let checked = "checked"
+                                for (const elemento of grupo) {
+                            %>  
+                                <label>
+                                    <input 
+                                        type="radio" 
+                                        name="<%- producto.valor %>-<%- kgrupo.replaceAll(" ","_") %>" 
+                                        data-parent='<%= JSON.stringify(producto) %>'
+                                        data-value='<%= JSON.stringify(elemento) %>'
+                                        onchange="calcularPrecio('<%- producto.valor %>')"
+                                        <%- checked %>
+                                    >
+                                    <%- elemento.valor %>
+                                </label>
+                                <br>
+                            <% 
+                                    checked = ""
+                                } 
+                            %>
+                        </div>
+                    <% } %>
+                    <br>
+                    <table style="text-align: center;width: 100%;">
+                        <tr>
+                            <td style="text-align: left;width: 50%;">
+                                <strong>
+                                    Unidad
+                                </strong>
+                                <h4 id="precio-<%- producto.valor %>">
+                                    $0
+                                </h4>
+                            </td>
+                            <td style="width: 50%;">
+                                <strong>
+                                    Cantidad
+                                </strong>
+                                <br>
+                                <input 
+                                    style="margin: 0;width: 90%;"
+                                    class="swal2-input" 
+                                    type="number" 
+                                    id="cantidad-<%- producto.valor %>" 
+                                    min="1" 
+                                    step="1" 
+                                    value="1"
+                                    onchange="
+                                        let cantidad = parseFloat(this.value);
+                                        if (cantidad<=0 || isNaN(cantidad)) {
+                                            this.value = 1;
+                                            cantidad = 1;
+                                        }
+                                        let techo = Math.ceil(cantidad);
+                                        if (cantidad != techo) {
+                                            this.value = techo;
+                                        }
+                                        calcularPrecio('<%- producto.valor %>');
+                                    "
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="text-align: left;width: 50%;">
+                                    <strong>
+                                        Total
+                                    </strong>
+                                    <h2 id="total-precio-<%- producto.valor %>">
+                                        $0
+                                    </h2>
+                                </div>
+                            </td>
+                            <td style="width: 50%;">
+                                <div class="boton" style="background-color: deeppink;color: white;padding: 10px;">
+                                    <h5>
+                                        Agregar
+                                    </h5>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                        
+                    <script>
+                        calcularPrecio('<%- producto.valor %>')
+                    </script>
+                </div>
+            </div>
+        <% } %> 
+        
+    </div>
+</div>

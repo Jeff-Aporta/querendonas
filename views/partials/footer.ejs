@@ -1,0 +1,71 @@
+        <style>
+            .banner-container-footer{
+                border-top: 2px solid chocolate;
+                position: relative;
+                height: 300px;
+                display:flex;
+                justify-content: center;
+                align-items:center;
+            }
+
+            .logo-footer{
+                width: 150px;
+            }
+
+            .item-footer{
+                color: deeppink;
+            }
+        </style>
+
+        <div>
+            <div 
+                class="
+                    banner-container-footer 
+                    dunkin
+                "
+            >
+                <div 
+                    style="
+                        position: absolute;
+                        top:0;
+                        left:0;
+                        width:100%;
+                        height:100%;
+                        z-index: -2;
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        background-image: url(<%- sheet.imgs.find("alias","bannerSuperior1024px").URL %>);
+                    "
+                ></div>
+                <div 
+                    style="
+                        position: absolute;
+                        top:0;
+                        left:0;
+                        width:100%;
+                        height:100%;
+                        z-index: -1;
+                        background-color: rgba(255, 20, 145, 0.8);
+                    "
+                ></div>
+                
+                <a href="/home" style="text-align: center;z-index: 1;margin: 10px;">
+                    <img src="<%- sheet.imgs.find("alias","logo600px").URL %>" class="logo-footer">
+                </a>
+                <div class="dunkin" style="color: white;">
+                    <big>
+                        <big>
+                            <big>
+                                <big>
+                                    Jamundí
+                                </big>
+                            </big>
+                        </big>
+                        <br>
+                        Valle del cauca
+                    </big>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

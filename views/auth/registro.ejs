@@ -1,0 +1,239 @@
+<%- include('../partials/header') %>
+
+<%- include('partials/auth-user',{login:false}) %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
+
+<style>
+    .container-signup{
+        position: relative;
+        height: 130vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .signup{
+        background-color: white;
+        display: inline-block;
+        width: 300px;
+        padding: 20px;
+    }
+
+    .signup img{
+        z-index: -2;
+        position: absolute;
+        top: -1%;
+        left: -1%;
+        width: 102%;
+        height: 102%;
+        filter: blur(5px) brightness(0.4);
+        background-size: cover;
+        background-image: url(<%-sheet.imgs.find("alias","banner-net-2").URL%>);
+    }
+
+    .background-signup{
+        text-align: left;
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        border-radius: 30px;
+        overflow: hidden;
+        background-image: url(<%-sheet.imgs.find("alias","banner-net-2").URL%>);
+        width: 70%;
+        min-width: 300px;
+    }
+
+    label{
+      width: 100%;
+    }
+</style>
+
+<body>
+    <div 
+        class="
+            container-signup
+        "
+    >
+        <div class="background-signup">
+            <div
+                class="signup"
+            >
+                <img>
+                <center>
+                    <h2>
+                        Crear cuenta
+                    </h2>
+                    <br>
+                    <label style="text-align: left;">
+                        Celular
+                        <br>
+                        <input 
+                            type="tel" 
+                            id="celular" 
+                            pattern="[0-9]{3}[0-9]{3}[0-9]{4}" 
+                            class="swal2-input" 
+                            style="margin: 0;" 
+                            onkeypress="return this.value.length<10 && onlyNumberKey(event)"
+                        >
+                    </label>
+                    <div style="text-align: left;">
+                        Clave
+                        <br>
+                        <div>
+                          <input 
+                            id="clave"
+                            class="swal2-input" 
+                            style="margin: 0;" 
+                            type="password"
+                          >
+                        </div>
+                    </div>
+                    <br>
+                    <label style="text-align: left;">
+                        <div id="antibot-container" style="text-align: center;">
+                        </div>
+                        <strong>Escribe las 4 letras</strong> (Antibots)
+                        <br>
+                        <input id="antibots" class="swal2-input" style="margin: 0;" type="text">
+                    </label>
+                    <br>
+                    <br>
+                    <a href="/auth/login">
+                      ¿Ya tienes cuenta? <strong>Ingresa</strong>
+                    </a>
+                    <br>
+                    <br>
+                    <div onclick="registrar()" class="boton dunkin" style="background-color: deeppink;color: white;padding: 10px;">
+                        Registro
+                    </div>
+                </center>
+            </div>
+        </div>
+    </div>
+</body>
+  
+<script>
+  function registrar(){
+    let celular = document.getElementById("celular").value
+    let clave = document.getElementById("clave").value
+    let antibots = document.getElementById("antibots").value
+    if (!celular || !clave || !antibots) {
+      swal.fire({
+        title:"Campos sin llenar",
+        text:"Completa todos los campos para hacer el registro",
+        icon:"error"
+      });
+      return
+    }
+    if (antibots.toLowerCase() != palabra_anti_bots.toLowerCase()) {
+      swal.fire({
+        title:"Código antibots no coincide",
+        text:"Revisa el código ingresado",
+        icon:"error"
+      });
+      return
+    }
+    if (clave.length<4) {
+      swal.fire({
+        title:"Clave muy corta",
+        text:"Debe ser mayor a 4 carácteres",
+        icon:"error"
+      });
+      return
+    }
+    if (celular.length!=10) {
+      swal.fire({
+        title:"Número de celular errado",
+        text:"Revisa el número de celular ingresado",
+        icon:"error"
+      });
+      return
+    }
+    socket.emit("registrar usuario",{celular,clave})
+    cortinaDeEspera(true)
+  }
+
+  socket.on("registro exitoso",()=>{
+    swal.fire({
+      title:"Registro",
+      text:"Exitoso",
+      icon:"success"
+    });
+    cortinaDeEspera(false)
+  })
+
+  socket.on("usuario ya existe",()=>{
+    swal.fire({
+      title:"Duplicado",
+      text:"ya existe",
+      icon:"warning"
+    });
+    cortinaDeEspera(false)
+  })
+</script>
+
+<script>
+
+let font;
+
+function preload() {
+  font = loadFont('/fonts/Dunkin.otf');
+}
+
+let points;
+let bounds;
+
+let palabra_anti_bots = ""
+
+function setup() {
+  canvas = createCanvas(150, 75);
+  canvas.parent("antibot-container")
+  generarPalabra()
+}
+
+function generarPalabra() {
+  palabra_anti_bots = ""
+  for (let i = 0; i < 4; i++) {
+    palabra_anti_bots += String.fromCharCode(
+      round(random(65, 90))
+    )
+  }
+  points = font.textToPoints(palabra_anti_bots, 0, 0, 10, {
+    sampleFactor: 5,
+    simplifyThreshold: 0
+  });
+  bounds = font.textBounds(palabra_anti_bots, 0, 0, 10);
+}
+
+function draw() {
+  clear()
+
+  for (let i = 0; i < 2; i++) {
+    push()
+    if (i % 2 == 1) {
+      beginShape(POINTS);
+      stroke(0);
+      strokeWeight(1.5)
+    } else {
+      beginShape();
+      noStroke()
+      fill("deeppink")
+    }
+    translate(-bounds.x * width / bounds.w, -bounds.y * height / bounds.h);
+    for (let i = 0; i < points.length; i++) {
+      let p = points[i];
+      let x = p.x * (width * 0.85) / bounds.w +
+        sin(p.y + millis() / 400) * 2 + sin(p.x + millis() / 400)*2 + (width * 0.05 / 2)
+      let y = p.y * (height * 0.9) / bounds.h - (height * 0.1 / 2)
+      vertex(x, y);
+    }
+    endShape(CLOSE);
+    pop()
+  }
+
+}
+
+</script>
+
+<%- include('../partials/footer') %>

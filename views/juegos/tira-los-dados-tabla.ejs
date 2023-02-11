@@ -1,0 +1,302 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+
+<style>
+    body{
+        position: relative;
+    }
+    #table-tira-los-dados{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 800px;
+        height: 800px;
+        transform-origin: 0 0;
+    }
+    #table-tira-los-dados td{
+        width: 100px;
+        height: 100px;
+        padding: 5px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    #table-tira-los-dados .td-borde{
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<% 
+color1="red"
+color2="blue"
+premios_hmtl = [
+        `
+        <span class="dunkin" style="font-size:16px">
+            Domicilio <strong>Gratis</strong>
+        </span>
+        `,
+        `
+        <span>
+            <strong class="dunkin" style="color:deeppink;font-size:15px">
+                Dona Gratis
+            </strong>
+            <img src="${sheet.imgs.find("alias","donutSVG").URL}" style="height: 40px;">
+        </span>
+        `,
+        `
+        <span>
+            <span style="font-weight:bolder;color:green;font-size:40px">
+                    50%
+            </span>
+            Descuento
+        </span>
+        `,
+        `
+        <span>
+            <span style="font-weight:bolder;color:lime;font-size:35px;text-shadow: 1px 1px 0 black;">
+                    40%
+            </span>
+            Descuento
+        </span>
+        `,
+        `
+        <span>
+            <span style="font-weight:bolder;color: gold;font-size:30px;text-shadow: 1px 1px 0 black;">
+                30%
+            </span>
+            Descuento
+        </span>
+        `,
+        `
+        <span>
+            <span style="font-weight:bolder;color: orange;font-size:25px;text-shadow: 1px 1px 0 black;">
+                20%
+            </span>
+            Descuento
+        </span>
+        `,
+        `
+        <span>
+            <span style="font-weight:bolder;color:red;font-size:20px;text-shadow: 1px 1px 0 black;">
+                    10%
+            </span>
+            Descuento
+        </span>
+        `,
+        `
+        <span style="font-weight:bolder;padding: 5px;background: red;color:white;font-size:20px;">
+                No hay premio
+        </span>
+        `,
+        `
+        <span style="font-weight:bolder;color:darkviolet;font-size:20px;">
+                Vuelve a lanzar
+        </span>
+        `,
+        `
+        <span style="font-weight:bolder;color:red;font-size:40px;">
+                x2
+        </span>
+        <span style="font-weight:bolder;color:black;font-size:15px;">
+                Lleva el doble
+        </span>
+        `,
+        `
+        <span style="font-weight:bolder;font-size:20px;">
+            <img src="${sheet.imgs.find("alias","coin").URL}" width="20px" height="20px" style="vertical-align:top;">
+            500 Créditos
+        </span>
+        `,
+        `
+        <span style="font-weight:bolder;font-size:20px;">
+            <img src="${sheet.imgs.find("alias","coin").URL}" width="20px" height="20px" style="vertical-align:top;">
+            1000 Créditos
+        </span>
+        `,
+        `
+        <span style="font-weight:bolder;font-size:20px;">
+            <img src="${sheet.imgs.find("alias","coin").URL}" width="20px" height="20px" style="vertical-align:top;">
+            1500 Créditos
+        </span>
+        `,
+        `
+        <span style="font-weight:bolder;font-size:20px;">
+            <img src="${sheet.imgs.find("alias","coin").URL}" width="20px" height="20px" style="vertical-align:top;">
+            2000 Créditos
+        </span>
+        `,
+    ]
+    matriz_premios = [
+        [1,11,5,5,12,0],
+        [13,1,8,2,0,10],
+        [6,2,1,0,9,4],
+        [6,9,0,1,2,4],
+        [10,0,2,7,1,13],
+        [0,12,3,3,11,1],
+    ]
+    for (const r of matriz_premios) {
+        for (let ic = 0; ic < r.length; ic++) {
+            r[ic] = premios_hmtl[r[ic]];
+        }
+    }
+%> 
+
+
+
+<table id="table-tira-los-dados">
+    <tbody>
+        <tr>
+            <td></td>
+            <td>
+                <svg style="width: 100%;height: 100%;">
+                    <rect x="1%" y="1%" rx="20" ry="20" width="98%" height="98%" style="fill:<%=color1%>;stroke:black;stroke-width:1;"></rect>
+                    <circle cx="50%" cy="50%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                </svg>
+            </td>
+            <td>
+                <svg style="width: 100%;height: 100%;">
+                    <rect x="1%" y="1%" rx="20" ry="20" width="98%" height="98%" style="fill:<%=color1%>;stroke:black;stroke-width:1;"></rect>
+                    <circle cx="25%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="75%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                </svg>
+            </td>
+            <td>
+                <svg style="width: 100%;height: 100%;">
+                    <rect x="1%" y="1%" rx="20" ry="20" width="98%" height="98%" style="fill:<%=color1%>;stroke:black;stroke-width:1;"></rect>
+                    <circle cx="75%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="50%" cy="50%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                </svg>
+            </td>
+            <td>
+                <svg style="width: 100%;height: 100%;">
+                    <rect x="1%" y="1%" rx="20" ry="20" width="98%" height="98%" style="fill:<%=color1%>;stroke:black;stroke-width:1;"></rect>
+                    <circle cx="75%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="75%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                </svg>
+            </td>
+            <td>
+                <svg style="width: 100%;height: 100%;">
+                    <rect x="1%" y="1%" rx="20" ry="20" width="98%" height="98%" style="fill:<%=color1%>;stroke:black;stroke-width:1;"></rect>
+                    <circle cx="75%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="50%" cy="50%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="75%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                </svg>
+            </td>
+            <td>
+                <svg style="width: 100%;height: 100%;">
+                    <rect x="1%" y="1%" rx="20" ry="20" width="98%" height="98%" style="fill:<%=color1%>;stroke:black;stroke-width:1;"></rect>
+                    <circle cx="75%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="50%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="75%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="75%" cy="50%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                </svg>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <svg style="width: 100%;height: 100%;">
+                    <rect x="1%" y="1%" rx="20" ry="20" width="98%" height="98%" style="fill:<%=color2%>;stroke:black;stroke-width:1;"></rect>
+                    <circle cx="50%" cy="50%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                </svg>
+            </td>
+            <% for(const e of matriz_premios[0]){ %> 
+                <td class="td-borde"><%- e %></td>
+            <% } %> 
+        </tr>
+        <tr>
+            <td>
+                <svg style="width: 100%;height: 100%;">
+                    <rect x="1%" y="1%" rx="20" ry="20" width="98%" height="98%" style="fill:<%=color2%>;stroke:black;stroke-width:1;"></rect>
+                    <circle cx="25%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="75%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                </svg>
+            </td>
+            <% for(const e of matriz_premios[1]){ %> 
+                <td class="td-borde"><%- e %></td>
+            <% } %> 
+        </tr>
+        <tr>
+            <td>
+                <svg style="width: 100%;height: 100%;">
+                    <rect x="1%" y="1%" rx="20" ry="20" width="98%" height="98%" style="fill:<%=color2%>;stroke:black;stroke-width:1;"></rect>
+                    <circle cx="75%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="50%" cy="50%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                </svg>
+            </td>
+            <% for(const e of matriz_premios[2]){ %> 
+                <td class="td-borde"><%- e %></td>
+            <% } %> 
+        </tr>
+        <tr>
+            <td>
+                <svg style="width: 100%;height: 100%;">
+                    <rect x="1%" y="1%" rx="20" ry="20" width="98%" height="98%" style="fill:<%=color2%>;stroke:black;stroke-width:1;"></rect>
+                    <circle cx="75%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="75%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                </svg>
+            </td>
+            <% for(const e of matriz_premios[3]){ %> 
+                <td class="td-borde"><%- e %></td>
+            <% } %> 
+        </tr>
+        <tr>
+            <td>
+                <svg style="width: 100%;height: 100%;">
+                    <rect x="1%" y="1%" rx="20" ry="20" width="98%" height="98%" style="fill:<%=color2%>;stroke:black;stroke-width:1;"></rect>
+                    <circle cx="75%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="50%" cy="50%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="75%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                </svg>
+            </td>
+            <% for(const e of matriz_premios[4]){ %> 
+                <td class="td-borde"><%- e %></td>
+            <% } %> 
+        </tr>
+        <tr>
+            <td>
+                <svg style="width: 100%;height: 100%;">
+                    <rect x="1%" y="1%" rx="20" ry="20" width="98%" height="98%" style="fill:<%=color2%>;stroke:black;stroke-width:1;"></rect>
+                    <circle cx="75%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="50%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="75%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="75%" cy="50%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="75%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                    <circle cx="25%" cy="25%" r="10" stroke-width="1" fill="white" stroke="black"></circle>
+                </svg>
+            </td>
+            <% for(const e of matriz_premios[5]){ %> 
+                <td class="td-borde"><%- e %></td>
+            <% } %> 
+        </tr>
+    </tbody>
+</table>
+
+
+<script>
+
+    window.addEventListener("resize",tableResponsive)
+
+    tableResponsive()
+
+    function tableResponsive(){
+        let table = document.getElementById("table-tira-los-dados")
+        let ex = window.innerWidth/(800)
+        let ey = window.innerHeight/(800)
+        let e = Math.min(ex,ey)
+        table.style.transform = `scale(${e})`
+    }
+</script>

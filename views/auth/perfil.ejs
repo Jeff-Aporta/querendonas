@@ -1,0 +1,54 @@
+<%- include('../partials/header') %>
+
+<%- include('partials/auth-user',{login:true}) %>
+
+<style>
+    center .boton{
+        padding: 10px;
+    }
+</style>
+
+<br>
+<center>
+    <h1>
+        Mi perfil
+    </h1>
+
+    <br>
+
+    <div style="display: inline-block;text-align: left;border-radius: 10px;border: 2px solid lightgray;padding: 15px;min-width: 330px;width: 70%;">
+        <img src="<%-sheet.imgs.find("alias","coin").URL%>" width="50px" height="50px" style="vertical-align:top;">
+        <div class="dunkin" style="display: inline-block;line-height: 20px;">
+            Créditos
+            <br>
+            <big>
+                <big>
+                    <%-(user?.creditos??"0".padStart(5,"0"))%> 
+                </big>
+            </big>
+        </div>
+        <hr>
+        <center style="display: flex;justify-content: center;align-items: center;flex-wrap: wrap;">
+            <div class="dunkin boton boton-menu">
+                Información
+            </div>
+            <div class="dunkin boton boton-menu">
+                Pedidos
+            </div>
+            <div class="dunkin boton boton-menu">
+                Cupones
+            </div>
+        </center>
+    </div>
+
+    <br>
+    <br>
+
+    <a href="/logout">
+        <div class="boton dunkin" style="background: seashell;color: deeppink;padding: 10px;border: 2px solid chocolate;">
+            Cerrar Sesión <i class="fa-solid fa-power-off"></i>
+        </div>
+    </a>
+</center>
+<br>
+<%- include('../partials/footer') %>

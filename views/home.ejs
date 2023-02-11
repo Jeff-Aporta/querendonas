@@ -1,0 +1,85 @@
+<%- include('partials/header') %>
+<script defer src="/js/site-home.js"></script>
+<link rel="stylesheet" href="/css/site-home.css">
+<body>
+
+    <script>
+        const sheet = <%- JSON.stringify(sheet) %> 
+    </script>
+
+    <style>
+        .seccion{
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            position: relative;
+        }
+
+        .minheight2-seccion{
+            min-height: 300px;
+        }
+
+        .mid-seccion-container{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .inner-seccion{
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.3);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <br>
+    <div class="carousel">
+        <div class="carousel__contenedor">
+            <button aria-label="Anterior" class="carousel__anterior" onclick="reiniciarEsperaSlide()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="carousel__lista">
+            </div>
+
+            <button aria-label="Siguiente" class="carousel__siguiente" onclick="reiniciarEsperaSlide()">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div class="container-indicadores">
+            <div role="tablist" class="carousel__indicadores"></div>
+        </div>
+    </div>
+    <br>
+
+    <h1 class="sevillana" style="text-align: center;font-size: 70px;font-weight: bolder;">
+        Catálogo
+    </h1>
+
+    <div style="text-align: center;" id="contenedor-catalogo">
+    </div>
+
+    <script>
+        {
+            let html = ""
+            for (const elemento of sheet.productos.filter(e=>e.tipo=="Grupo")) {
+                html+=`
+                <a href="${elemento.url}">
+                    <div class="btn-txt-short-img-sevillana">
+                        <img src="${elemento.imagen}">
+                        <div class="oscurecer">
+                            ${elemento.grupo}
+                        </div>
+                    </div>
+                </a>
+                `
+            }
+            document.getElementById("contenedor-catalogo").innerHTML = html
+        }
+    </script>
+
+<%- include('partials/footer') %>

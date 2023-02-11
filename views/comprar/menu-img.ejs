@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú imágen</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.min.js"></script>
+</head>
+<body>
+    <script>
+        let bg
+        let textos
+        let dunkin
+
+        function preload(){
+            bg = loadImage("https://i.ibb.co/XjznHKd/querendonas-plantilla-menu.jpg")
+            dunkin = loadFont('/fonts/Dunkin.otf');
+        }
+
+        function setup(){
+            createCanvas(1024,1024)
+            textos = createGraphics(500,550)
+            textos.textAlign(LEFT,TOP)
+            textos.fill("#A46570");
+            textos.textSize(35);
+            textos.push()
+            textos.textFont(dunkin);
+            textos.text("Rellenas",0,0)
+            textos.translate(0,50)
+            textos.stroke("#A46570");
+            textos.strokeWeight(3);
+            textos.line(0,0,245,0)
+            textos.pop()
+            textos.push()
+            textos.translate(0,60)
+            <% for(let producto of sheet.productos.filter(e=>e.tipo=="Dona" && e.grupo=="Básica" && e.variable=="Rellena")){ %>
+                textos.textAlign(LEFT,TOP)
+                textos.textStyle(NORMAL);
+                textos.textSize(13);
+                textos.text("<%- producto.Nombre %>",0,0)
+                textos.textAlign(RIGHT,TOP)
+                textos.textStyle(BOLD);
+                textos.textSize(16);
+                textos.text("<%- producto.precio.formatMoney() %>",240,0)
+                textos.translate(0,23)
+            <% } %>
+            textos.pop()
+            
+            textos.push()
+            textos.translate(255,0)
+            textos.push()
+            textos.textFont(dunkin);
+            textos.text("Cubiertas",0,0)
+            textos.translate(0,50)
+            textos.stroke("#A46570");
+            textos.strokeWeight(3);
+            textos.line(0,0,250,0)
+            textos.pop()
+            textos.push()
+            textos.textSize(13);
+            textos.translate(0,60)
+            <% for(let producto of sheet.productos.filter(e=>e.tipo=="Dona" && e.grupo=="Básica" && e.variable=="Cubierta")){ %>
+                textos.textAlign(LEFT,TOP)
+                textos.textStyle(NORMAL);
+                textos.textSize(13);
+                textos.text("<%- producto.Nombre %>",0,0)
+                textos.textAlign(RIGHT,TOP)
+                textos.textStyle(BOLD);
+                textos.textSize(16);
+                textos.text("<%- producto.precio.formatMoney() %>",240,0)
+                textos.translate(0,23)
+            <% } %>
+            textos.pop()
+            textos.pop()
+
+            textos.push()
+            textos.translate(125,260)
+            textos.push()
+            textos.textFont(dunkin);
+            textos.text("Descuentos",0,0)
+            textos.translate(0,50)
+            textos.stroke("#A46570");
+            textos.strokeWeight(3);
+            textos.line(0,0,245,0)
+            textos.pop()
+            textos.push()
+            textos.textSize(13);
+            textos.translate(0,60)
+            <% for(let producto of sheet.productos.filter(e=>e.tipo=="Descuento" && e.grupo=="Cantidad")){ %>
+                textos.textAlign(LEFT,TOP)
+                textos.textStyle(NORMAL);
+                textos.textSize(13);
+                textos.text("<%- producto.Nombre %>",0,0)
+                textos.textAlign(RIGHT,TOP)
+                textos.textStyle(BOLD);
+                textos.textSize(16);
+                textos.text("<%- producto.porcentaje.replaceAll(",",".") %>",240,0)
+                textos.translate(0,23)
+            <% } %>
+            textos.pop()
+            textos.pop()
+
+            textos.push()
+            textos.translate(10,460)
+            textos.push()
+            textos.textSize(30);
+            textos.textStyle(BOLD);
+            textos.text("Domicilio gratis",0,0)
+            textos.textSize(13);
+            textos.textStyle(NORMAL);
+            textos.translate(0,30)
+            textos.text("Si pagas por Nequi, Ahorro a la mano o Daviplata.",0,0)
+            textos.textSize(10);
+            textos.translate(0,18)
+            textos.text("(Mandar pantallazo a Whatsapp)",0,0)
+            textos.textSize(13);
+            textos.translate(0,18)
+            textos.text("De lo contrario el domicilio tiene un costo de "+ "<%-sheet.productos.filter(e=>e.tipo=="Domicilio")[0].precio.formatMoney()%>",0,0)
+            textos.pop()
+            textos.pop()
+        }
+
+        function draw(){
+            image(bg,0,0)
+            image(textos,450,360)
+            noFill()
+            stroke(0,20)
+            // rect(450,360,textos.width,textos.height)
+            // rect(450+250,360,250,250)
+            // rect(450,360+250,250,250)
+            // rect(450+250,360+250,250,250)
+            noLoop()
+        }
+    </script>
+</body>
+</html>

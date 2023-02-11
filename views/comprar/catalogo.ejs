@@ -1,0 +1,123 @@
+<%- include('../partials/header') %>
+
+<script>
+    function agregarProducto(id){
+        let tipo = document.getElementById(id)
+        let cantidad = document.getElementById("cantidad-"+id).value
+        let radios = tipo.querySelectorAll("input")
+        let padre = JSON.parse(radios[0].dataset.parent)
+        let producto = {
+            descripcion:[],
+            elementos:  [padre]
+        }
+        let precio = parseFloat(padre.precio)
+        for (const radio of radios) {
+            if (radio.checked) {
+                let adición = JSON.parse(radio.dataset.value);
+                producto.descripcion.push(adición.valor.includes("Sin ")?[adición.valor]:[adición.variable,adición.valor])
+                producto.elementos.push(adición) 
+                precio+=parseFloat(adición.precio)
+            }
+        }
+        producto.descripcion = `Dona tipo ${padre.valor} con ` + producto.descripcion.map(e=>e.join(" de ")).join(", ")
+        producto.precioUnidad = precio
+        producto.cantidad = parseFloat(cantidad)
+        producto.precio = precio*cantidad
+        console.log(producto)
+    }
+
+    function calcularPrecio(id){
+        let tipo = document.getElementById(id)
+        let precio = document.getElementById("precio-"+id)
+        let total_precio = document.getElementById("total-precio-"+id)
+        let cantidad = document.getElementById("cantidad-"+id).value
+        let radios = tipo.querySelectorAll("input")
+        let valor = parseFloat(JSON.parse(radios[0].dataset.parent).precio)
+        for (const radio of radios) {
+            if (radio.checked) {
+                valor += parseFloat(JSON.parse(radio.dataset.value).precio)
+            }
+        }
+        precio.innerHTML = (valor).formatMoney()
+        total_precio.innerHTML = (valor*cantidad).formatMoney()
+        agregarProducto(id)
+    }    
+
+    function calcularPrecio2(id){
+        let tipo = document.getElementById(id)
+        let precio = document.getElementById("precio-"+id)
+        let total_precio = document.getElementById("total-precio-"+id)
+        let cantidad = document.getElementById("cantidad-"+id)
+        let valor = JSON.parse(cantidad.dataset.value).precio
+        console.log(valor)
+        precio.innerHTML = valor.formatMoney()
+        total_precio.innerHTML = (valor*cantidad).formatMoney()
+        agregarProducto(id)
+    }    
+</script>
+
+<div 
+    style="
+        background-color: white;
+        color: deeppink;
+        line-height: 15px;
+        padding: 10px;
+    ">
+    Si pagas por <strong>Nequi</strong>, <strong>Ahorro a la mano</strong> o <strong>Daviplata</strong> no se te cobrará el domicilio (<%- sheet.productos.filter(e=>e.tipo=="Domicilio")[0].precio.formatMoney() %>).
+    <br>
+    <br>
+    <a target="_blank" href="https://wa.me/+573016105515">
+        <small>
+            <small>
+                <em><strong>No olvides mandar el pantallazo al whatsapp <big><i class="fa-brands fa-whatsapp"></i></big> </strong></em>
+            </small>
+        </small>
+    </a>
+</div>
+<div 
+    style="
+        background-color: deeppink;
+        color: white;
+        line-height: 20px;
+        padding: 10px;
+    "
+>
+    <center>
+        <h2 class="dunkin">
+            Descuentos
+        </h2>
+    </center>
+    <div style="display: flex;flex-wrap: wrap;justify-content: space-evenly;align-items: center;">
+        <% for(let producto of sheet.productos.filter(e=>e.tipo=="Descuento")){ %> 
+            <div style="display: inline-block;font-size: 120%;text-align: center;margin: 10px;">
+                <%- producto.Nombre %>
+                <br>
+                <big>
+                    <strong>
+                        <%- producto.porcentaje.replaceAll(",",".") %>
+                    </strong>
+                </big>
+            </div>
+        <% } %> 
+    </div>
+    <center style="border-top: 1px solid rgba(255, 255, 255, 0.5);border-bottom: 1px solid rgba(255, 255, 255, 0.5);">
+        <small>
+            <small>
+                <small>
+                    Los descuentos correspondientes se verán reflejados en el carrito de compras.
+                </small>
+            </small>
+        </small>
+    </center>
+</div>
+
+<center>
+
+    <%- include('catalogo-donas-basicas') %>
+    <hr>
+    <%- include('catalogo-donas-armadas') %>
+    
+    
+</center>
+
+<%- include('../partials/footer') %>

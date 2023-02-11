@@ -1,0 +1,137 @@
+<%- include('../partials/header') %>
+
+<%- include('partials/auth-user',{login:false}) %>
+
+<style>
+    .container-login{
+        position: relative;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login{
+        background-color: white;
+        display: inline-block;
+        width: 300px;
+        padding: 20px;
+    }
+
+    .login img{
+        z-index: -2;
+        position: absolute;
+        top: -1%;
+        left: -1%;
+        width: 102%;
+        height: 102%;
+        filter: blur(5px) brightness(0.4);
+        background-size: cover;
+        background-image: url(<%-sheet.imgs.find("alias","banner-net-2").URL%>);
+    }
+
+    .background-login{
+        text-align: right;
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        border-radius: 30px;
+        overflow: hidden;
+        background-image: url(<%-sheet.imgs.find("alias","banner-net").URL%>);
+        width: 70%;
+        min-width: 300px;
+    }
+</style>
+
+<body>
+    <div 
+        class="
+            container-login
+        "
+    >
+        <div class="background-login">
+            <div
+                class="login"
+            >
+                <img>
+                <center>
+                    <form id="form" action="/login" method="post">
+                        <h2>
+                            Inicio de sesión
+                        </h2>
+                        <br>
+                        <label style="text-align: left;">
+                            Celular
+                            <br>
+                            <input 
+                                type="tel" 
+                                id="celular" 
+                                name="celular" 
+                                class="swal2-input" 
+                                style="margin: 0;" 
+                                onkeypress="return this.value.length<10 && onlyNumberKey(event)"
+                            >
+                        </label>
+                        <label style="text-align: left;">
+                            Clave
+                            <br>
+                            <input id="clave" name="clave" class="swal2-input" style="margin: 0;" type="password">
+                        </label>
+                        <br>
+                        <br>
+                        <a href="/auth/registro">
+                            ¿No tienes cuenta? <strong>Registrate</strong>
+                        </a>
+                        <br>
+                        <br>
+                        <div onclick="iniciarSesion();;" class="boton dunkin" style="background-color: deeppink;color: white;padding: 10px;">
+                            Ingresar
+                        </div>
+                    </form>
+                </center>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function iniciarSesion(){
+        cortinaDeEspera(true)
+        let celular = document.getElementById("celular").value
+        let clave = document.getElementById("clave").value
+        if (!celular || !clave) {
+            swal.fire({
+                title:"Campos sin llenar",
+                text:"Completa todos los campos",
+                icon:"error"
+            });
+            return
+        }
+        socket.emit("comprobar información de inicio de sesión",{celular,clave})
+    }
+
+    socket.on("información de inicio de sesión: CORRECTA",()=>{
+        cortinaDeEspera(false)
+        document.getElementById("form").submit()
+    })
+
+    socket.on("información de inicio de sesión: CELULAR INCORRECTO",()=>{
+        cortinaDeEspera(false)
+        swal.fire({
+            title:"Datos erroneos",
+            text:"El celular no está registrado.",
+            icon:"error"
+        });
+    })
+
+    socket.on("información de inicio de sesión: CLAVE INCORRECTA",()=>{
+        cortinaDeEspera(false)
+        swal.fire({
+            title:"Datos erroneos",
+            text:"La contraseña no coincide.",
+            icon:"error"
+        });
+    })
+</script>
+
+<%- include('../partials/footer') %>
